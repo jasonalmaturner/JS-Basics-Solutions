@@ -7,6 +7,18 @@ var name = 'Tyler';
 
   //Code Here
 
+function isTyler(theName){
+  if(theName === 'Tyler'){
+    return true;
+  } else {
+    return false;
+  };
+};
+
+// This is a more succint answer, but perhaps less readable
+function isTyler(theName){
+  return theName === 'Tyler';
+};
 
 //Next problem
 
@@ -16,7 +28,9 @@ var name = 'Tyler';
 
 
   //Code Here
-
+function getName(){
+  return prompt('Name please?');
+};
 
 //Next Problem
 
@@ -27,6 +41,9 @@ var name = 'Tyler';
 
   //Code Here
 
+function welcome(){
+  alert('Welcome, ' + getName());
+};
 
 //Next problem
 
@@ -57,13 +74,21 @@ var name = 'Tyler';
 
   //Code Here
 
+function myName (){
+  return 'jason';
+};
+
 //Now save the function definition of myName into a new variable called newMyName
 
   //Code Here
 
+var newMyName = function(){
+  return 'jason';
+};
+
 //Now alert the result of invoking newMyName
 
-
+alert(newMyName());
 
 //Next problem
 
@@ -73,8 +98,18 @@ var name = 'Tyler';
 
   //Code Here
 
+function outerFn (){
+  return function(){
+    return 'jason';
+  };
+};
+
 //Now save the result of invoking outerFn into a variable called innerFn.
 
   //Code Here
 
+var innerFn = outerFn();
+
 //Now invoke innerFn.
+
+innerFn();

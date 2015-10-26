@@ -13,6 +13,9 @@ var outer = function(){
 
 //Once you do that, invoke inner.
 
+var inner = outer();
+inner();
+
   //Code Here
 
 
@@ -34,10 +37,11 @@ var callFriend = function(){
 
   //Code Here
 
+var inner = callFriend();
+inner(2086500116)
 
 
 //Next Problem
-
 
 
 /*
@@ -51,6 +55,12 @@ var callFriend = function(){
   count() // 3
   count() // 4
 
+  function makeCounter (){
+    var count = 0;
+    return function(){
+      return count++;
+    };
+  };
 
 
 //Next Problem
@@ -58,21 +68,58 @@ var callFriend = function(){
 
 
 /*
-  Write a function that does something simple (console, alert, etc). Write a second function that accepts the first function as it's first parameter. The second function should return a new third function which, when invoked, invokes the first, original function that was passed in, but will only ever do so once.
+  Write a function that does something simple (console, alert, etc). Write a
+  second function that accepts the first function as it's first parameter.
+  The second function should return a new third function which, when invoked,
+   invokes the first, original function that was passed in, but will only ever do so once.
 */
 
   //Code Here
 
+function doSomethingSimple (){
+  return 'quando omni flunkus moritati';
+};
 
+function second (cb){
+  var flag = true;
+  return function(){
+    if(flag){
+      flag = false;
+      return cb();
+    } else {
+      return 'You already invoked it, ya big dumb';
+    };
+  };
+};
+
+var inner = second(doSomethingSimple);
+inner();
 
 //Next Problem
 
 
 
 /*
-  Now, similar to the last problem, write a function called 'fnCounter' that accepts two parameters. The first parameter will be an anonymous function and the second parameter, 'N', will be a number. Now, in 'fnCounter', allow the anonymous funciton to be invoked 'N' number of times. After it's been invoked 'N' number of times, return 'STOP'.
+  Now, similar to the last problem, write a function called 'fnCounter' that accepts
+  two parameters. The first parameter will be an anonymous function and the
+  second parameter, 'N', will be a number. Now, in 'fnCounter', allow the
+  anonymous funciton to be invoked 'N' number of times. After it's been
+  invoked 'N' number of times, return 'STOP'.
 */
 
+function fnCounter (cb, n){
+  return function(){
+    if(n > 0){
+      n--;
+      return cb();
+    } else {
+      return 'You\re done, ya big dumb';
+    };
+  };
+};
+
+var inner = fnCounter(doSomethingSimple, 3);
+inner();
 
 
 //Next Problem
@@ -105,11 +152,69 @@ var callFriend = function(){
 
     //Code Here
 
+// Solution 1
+function logCount (x){
+  setTimeout(function(){
+    console.log(x)
+  }, x*1000);
+};
+
+var counter = function(){
+  for (var i=1; i<=5; i++) {
+    logCount(i);
+  };
+};
+
+// Solution 2. This solution is very similar to solution 1, but we'll wrap logCount
+// in an iffe. Iffes have not been covered in class, and probably will not
+// be covered.
+
+var counter = function(){
+  for(var i = 1; i < 6; i++){
+    (function(x){
+      setTimeout(function(){
+        console.log(x);
+      }, x*1000);
+    })(i);
+  };
+};
+
+// Solution 3
+// This is probably the quickest solution, but .bind() has not been covered
+// yet in class.
+var counter = function(){
+  for (var i=1; i<=5; i++) {
+    setTimeout(function(x){
+        console.log(x);
+    }.bind(null, i), i*1000 );
+  };
+};
 
 
 //Next Problem
+// Solution 1
+var funcArray = [];
+
+function pushFunc(x){
+  funcArray.push(function(){
+    return x;
+  })
+};
+
+for(var i = 0; i < 6; i++){
+  pushFunc(i);
+};
 
 
+// Solution 2. This one uses an iffe.
+var funcArray = [];
+for(var i = 0; i < 6; i++){
+  (function(x){
+    funcArray.push(function(){
+      return x;
+    });
+  })(i);
+};
 
 /*
   Make the following code work
@@ -123,5 +228,3 @@ var callFriend = function(){
 
   *Hint: Don't let this fool you. Break down what's really happening here.
 */
-
-
